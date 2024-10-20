@@ -4,7 +4,7 @@ import SideBar from "./components/SideBar";
 import Footer from "./components/Footer";
 
 function App() {
-  const NASA_API_KEY = import.meta.env.VITE_NASA_API_KEY;
+  const NASA_API = import.meta.env.VITE_NASA_API;
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -26,7 +26,7 @@ function App() {
 
       try {
         const response = await fetch(
-          `https://api.nasa.gov/planetary/apod?api_key=${NASA_API_KEY}`
+          `https://api.nasa.gov/planetary/apod?api_key=${NASA_API}`
         );
         const apiData = await response.json();
         localStorage.setItem(localKey, JSON.stringify(apiData));
@@ -37,7 +37,7 @@ function App() {
       }
     }
     fetchAPIData();
-  }, [NASA_API_KEY]);
+  }, [NASA_API]);
 
   return (
     <>
