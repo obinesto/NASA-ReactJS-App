@@ -70,6 +70,13 @@
   100% { transform: translateX(0); }
 }
 
+.bgOverlay{
+  background: #030615;
+  position: absolute;
+  inset: 0;
+  opacity: 0.6;
+}
+
 .sidebarContents{
   display: flex;
   flex-direction: column;
@@ -82,6 +89,7 @@
   max-width: 800px; 
   z-index: 15;
   margin-left: auto;
+  background-color: #030615;
 }
 
 .sidebarContents::-webkit-scrollbar {
