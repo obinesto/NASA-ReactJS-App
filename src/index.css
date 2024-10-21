@@ -62,13 +62,12 @@
   display: flex;
   flex-direction: column;
   z-index: 10;
+  animation: slideIn 0.4s ease-in;
 }
 
-.bgOverlay{
-  background: #030615;
-  position: absolute;
-  inset: 0;
-  opacity: 0.6;
+@keyframes slideIn {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(0); }
 }
 
 .sidebarContents{
@@ -83,7 +82,6 @@
   max-width: 800px; 
   z-index: 15;
   margin-left: auto;
-  background-color: #030615;
 }
 
 .sidebarContents::-webkit-scrollbar {
@@ -92,6 +90,12 @@
 
 .sidebarContents div{
   flex: 1;
+}
+
+.sidebarContents p{
+  font-size: 1.0em;
+  font-weight: 350;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .sidebarContents button{

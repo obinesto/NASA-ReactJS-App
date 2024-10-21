@@ -6,7 +6,6 @@ import Footer from "./components/Footer";
 function App() {
   const NASA_API = import.meta.env.VITE_NASA_API;
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   function handleToggleModal() {
@@ -15,15 +14,15 @@ function App() {
 
   useEffect(() => {
     async function fetchAPIData() {
-      const today = (new Date()).toDateString();
+      const today = new Date().toISOString().split("T")[0];
       const localKey = `apodData-${today}`;
-      if (localStorage.getItem(localKey)) {
-        setData(JSON.parse(localStorage.getItem(localKey)));
+      const cachedData = JSON.parse(localStorage.getItem(localKey));
+      if (cachedData && cachedData.date === today) {
+        setData(cachedData);
         console.log(`fetched from cache today: ${localKey}`);
         return;
       }
       localStorage.clear();
-
       try {
         const response = await fetch(
           `https://api.nasa.gov/planetary/apod?api_key=${NASA_API}`
@@ -49,7 +48,9 @@ function App() {
           <h2>Loading...</h2>
         </div>
       )}
-      {showModal && <SideBar data={data} handleToggleModal={handleToggleModal} />}
+      {showModal && (
+        <SideBar data={data} handleToggleModal={handleToggleModal} />
+      )}
       {data && <Footer data={data} handleToggleModal={handleToggleModal} />}
     </>
   );
