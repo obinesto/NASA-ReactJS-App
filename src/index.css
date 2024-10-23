@@ -185,5 +185,10 @@ footer button i{
     margin: unset;
     width: 100%;
   }
+
+  .bgImage{
+    object-fit: contain;
+  }
+  
 }
   
