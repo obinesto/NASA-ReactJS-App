@@ -35,29 +35,33 @@ function App() {
       const localKey = `apodData-${today}`;
       const cachedData = JSON.parse(localStorage.getItem(localKey));
 
-      if (cachedData && cachedData.hdurl === null) {
-        return;
-      } else if(cachedData && cachedData.date === today) {
-        setData(cachedData);
-        console.log(`fetched from cache today: ${localKey}`);
-        return;
+      if (cachedData) {
+        const isDataIncomplete = !cachedData.title || !cachedData.hdurl || !cachedData.explanation;
+        if (isDataIncomplete || cachedData.date !== today) {
+          console.warn(
+            "Cached data is incomplete or outdated, fetching new data"
+          );
+        } else {
+          setData(cachedData);
+          console.log(`Fetched from cache: ${localKey}`);
+          return;
+        }
       }
-      localStorage.clear();
+
       try {
         const response = await fetch(
           `https://api.nasa.gov/planetary/apod?api_key=${NASA_API}`
         );
         const apiData = await response.json();
 
-        const isDataIncomplete =
-          !apiData.title || !apiData.hdurl || !apiData.explanation;
-        if (isDataIncomplete) {
+        const isAPIDataIncomplete = !apiData.title || !apiData.hdurl || !apiData.explanation;
+        if (isAPIDataIncomplete) {
           console.warn("API data is incomplete, using fallback data");
           setData(fallbackData);
         } else {
           localStorage.setItem(localKey, JSON.stringify(apiData));
           setData(apiData);
-          console.log("fetched from API today");
+          console.log("Fetched from API today");
         }
       } catch (error) {
         console.error("Error fetching data: ", error);
