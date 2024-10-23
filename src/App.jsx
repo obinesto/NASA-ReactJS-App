@@ -35,12 +35,13 @@ function App() {
       const localKey = `apodData-${today}`;
       const cachedData = JSON.parse(localStorage.getItem(localKey));
 
-      if (cachedData && cachedData.date === today) {
+      if (cachedData && cachedData.hdurl === null) {
+        return;
+      } else if(cachedData && cachedData.date === today) {
         setData(cachedData);
         console.log(`fetched from cache today: ${localKey}`);
         return;
       }
-
       localStorage.clear();
       try {
         const response = await fetch(
