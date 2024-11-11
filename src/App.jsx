@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Main from "./components/Main";
 import SideBar from "./components/SideBar";
 import Footer from "./components/Footer";
+// import Loader from "./components/Loader";
 import fallbackImage from "./assets/ssc2008-10b1.png";
 
 const fallbackData = {
@@ -81,6 +82,7 @@ function App() {
           <i className="fa-solid fa-gear fa-2xl"></i>
           <h2>Loading...</h2>
         </div>
+        // <Loader/>
       )}
       {showModal && (
         <SideBar data={data} handleToggleModal={handleToggleModal} />
